@@ -6,7 +6,9 @@ import 'package:flutter/scheduler.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:vpn_basic_project/screens/home_screen_cards.dart';
+import 'package:vpn_basic_project/screens/location_screen.dart';
 
 import '../models/vpn_config.dart';
 import '../models/vpn_status.dart';
@@ -79,7 +81,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: 'Country',
                     subtitle: 'Free',
                     icon: Icon(Icons.vpn_key),
-                  ),        HomeScreenCards(
+                  ),
+                  HomeScreenCards(
                     title: 'Country',
                     subtitle: 'Free',
                     icon: Icon(Icons.vpn_key),
@@ -93,7 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: 'Country',
                     subtitle: 'Free',
                     icon: Icon(Icons.vpn_key),
-                  ),        HomeScreenCards(
+                  ),
+                  HomeScreenCards(
                     title: 'Country',
                     subtitle: 'Free',
                     icon: Icon(Icons.vpn_key),
@@ -103,6 +107,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.to(() => LocationScreen());
+        },
+        child: Icon(Icons.add),
       ),
     );
   }

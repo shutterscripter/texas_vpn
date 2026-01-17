@@ -1,17 +1,14 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:vpn_basic_project/controllers/home_controller.dart';
 import 'package:vpn_basic_project/screens/home_screen_cards.dart';
 import 'package:vpn_basic_project/screens/location_screen.dart';
-
+import 'package:vpn_basic_project/widget/count_down_timer.dart';
 import '../models/vpn_config.dart';
-import '../models/vpn_status.dart';
 import '../services/vpn_engine.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,7 +17,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String _vpnState = VpnEngine.vpnDisconnected;
+  final HomeController _homeController = Get.put(HomeController());
+  // String _vpnState = VpnEngine.vpnDisconnected;
   List<VpnConfig> _listVpn = [];
   VpnConfig? _selectedVpn;
 
@@ -30,10 +28,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
     ///Add listener to update vpn state
     VpnEngine.vpnStageSnapshot().listen((event) {
-      setState(() => _vpnState = event);
+      _homeController.vpnState.value = event;
     });
 
     initVpn();
+  }
+
+  @override
+  void dispose() {
+    _homeController.dispose();
+    super.dispose();
   }
 
   void initVpn() async {
@@ -73,37 +77,15 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              /// Connect VPN Button
               _vpnButton(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  HomeScreenCards(
-                    title: 'Country',
-                    subtitle: 'Free',
-                    icon: Icon(Icons.vpn_key),
-                  ),
-                  HomeScreenCards(
-                    title: 'Country',
-                    subtitle: 'Free',
-                    icon: Icon(Icons.vpn_key),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  HomeScreenCards(
-                    title: 'Country',
-                    subtitle: 'Free',
-                    icon: Icon(Icons.vpn_key),
-                  ),
-                  HomeScreenCards(
-                    title: 'Country',
-                    subtitle: 'Free',
-                    icon: Icon(Icons.vpn_key),
-                  ),
-                ],
-              ),
+
+              /// CountDownTimer
+              Obx(() =>
+                  CountDownTimer(StartTimer: _homeController.startTimer.value)),
+
+              /// Stat Cards
+              _statCards(),
             ],
           ),
         ),
@@ -121,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ///Stop right here if user not select a vpn
     if (_selectedVpn == null) return;
 
-    if (_vpnState == VpnEngine.vpnDisconnected) {
+    if (_homeController.vpnState.value == VpnEngine.vpnDisconnected) {
       ///Start if stage is disconnected
       VpnEngine.startVpn(_selectedVpn!);
     } else {
@@ -131,24 +113,97 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _vpnButton() {
-    return Container(
-      height: 150.sp,
-      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            CupertinoIcons.power,
-            size: 50.sp,
-            color: Colors.white,
-            weight: 1.0,
+    return Column(
+      children: [
+        InkWell(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          onTap: () {
+            _connectClick();
+            _homeController.startTimer.value = !_homeController.startTimer.value;
+          },
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 12.h),
+            child: CircleAvatar(
+              backgroundColor: Colors.blue.withValues(alpha: 0.2),
+              radius: 110.sp,
+              child: CircleAvatar(
+                backgroundColor: Colors.blue.withValues(alpha: 0.4),
+                radius: 90.sp,
+                child: CircleAvatar(
+                  radius: 70.sp,
+                  backgroundColor: Colors.blue,
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          CupertinoIcons.power,
+                          size: 45.sp,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          'Tap to Connect VPN',
+                          style: TextStyle(
+                            fontSize: 11.sp,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
-          Text(
-            'Tap to Connect VPN',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-          )
-        ],
-      ),
+        ),
+
+        Container(
+          child: Text('${_homeController.vpnState.value }')
+        )
+      ],
+    );
+  }
+
+  Widget _statCards() {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(top: 16.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              HomeScreenCard(
+                title: 'Country',
+                subtitle: 'Free',
+                icon: Icons.vpn_key,
+              ),
+              HomeScreenCard(
+                title: 'Country',
+                subtitle: 'Free',
+                icon: Icons.vpn_key,
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: 10.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            HomeScreenCard(
+              title: 'Country',
+              subtitle: 'Free',
+              icon: Icons.vpn_key,
+            ),
+            HomeScreenCard(
+              title: 'Country',
+              subtitle: 'Free',
+              icon: Icons.vpn_key,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

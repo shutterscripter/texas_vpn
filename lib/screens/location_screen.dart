@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vpn_basic_project/api/fetch_servers.dart';
-import 'package:vpn_basic_project/location_controller.dart'
+import 'package:vpn_basic_project/controllers/location_controller.dart'
     show LocationController;
 import 'package:vpn_basic_project/widget/vpn_card.dart';
 

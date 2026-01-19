@@ -1,7 +1,10 @@
-import 'dart:math';
-
+import 'dart:convert';
 import 'package:csv/csv.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:vpn_basic_project/helpers/custom_snackbars.dart';
+import 'package:vpn_basic_project/helpers/hive_pref.dart';
+import 'package:vpn_basic_project/models/ip_details.dart';
 import 'package:vpn_basic_project/models/vpn.dart';
 
 class FetchServers {
@@ -30,20 +33,19 @@ class FetchServers {
     }
     vpnList.shuffle();
 
-    //if (vpnList.isNotEmpty) Pref.vpnList = vpnList;
+    if (vpnList.isNotEmpty) HivePref.vpnList = vpnList;
 
     return vpnList;
   }
 
-  // static Future<void> getIPDetails({required Rx<IPDetails> ipData}) async {
-  //   try {
-  //     final res = await get(Uri.parse('http://ip-api.com/json/'));
-  //     final data = jsonDecode(res.body);
-  //     log(data.toString());
-  //     ipData.value = IPDetails.fromJson(data);
-  //   } catch (e) {
-  //     MyDialogs.error(msg: e.toString());
-  //     log('\ngetIPDetailsE: $e');
-  //   }
-  // }
+  static Future<void> getIPDetails({required Rx<IPDetails> ipData}) async {
+    try {
+      final res = await http.get(Uri.parse('http://ip-api.com/json/'));
+      final data = jsonDecode(res.body);
+
+      ipData.value = IPDetails.fromJson(data);
+    } catch (e) {
+      CustomSnackbars.showErrorSnackBar(msg: e.toString());
+    }
+  }
 }

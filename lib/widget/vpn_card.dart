@@ -2,7 +2,13 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:vpn_basic_project/controllers/home_controller.dart';
+import 'package:vpn_basic_project/helpers/hive_pref.dart';
 import 'package:vpn_basic_project/models/vpn.dart';
+import 'package:vpn_basic_project/screens/home_screen.dart';
+import 'package:vpn_basic_project/services/vpn_engine.dart' show VpnEngine;
 
 class VpnCard extends StatelessWidget {
   final Vpn vpn;
@@ -10,6 +16,8 @@ class VpnCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final HomeController _homeController = Get.find<HomeController>();
+
     return Card(
       elevation: 5,
       shape: RoundedRectangleBorder(
@@ -17,14 +25,56 @@ class VpnCard extends StatelessWidget {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
-        onTap: () {},
+        onTap: () {
+          _homeController.selectedVpn.value = vpn;
+          HivePref.vpn = vpn;
+          Get.to(() => HomeScreen());
+          if (_homeController.vpnState.value == VpnEngine.vpnConnected) {
+            VpnEngine.stopVpn();
+            Future.delayed(Duration(seconds: 2), () {
+              _homeController.connectVPN();
+            });
+          } else {
+            _homeController.connectVPN();
+          }
+        },
         child: ListTile(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(10.r),
           ),
-          leading: Image.asset(
-            'assets/flags/${vpn.countryShort.toLowerCase()}.png',
-            height: 40,
+          leading: Container(
+            height: 44,
+            width: 72,
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Colors.grey.withOpacity(0.15),
+                  Colors.grey.withOpacity(0.05),
+                ],
+              ),
+            ),
+            child: vpn.countryShort.isEmpty
+                ? Icon(
+                    Icons.location_on_rounded,
+                    size: 26,
+                    color: Colors.white70,
+                  )
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'assets/flags/${vpn.countryShort.toLowerCase()}.png',
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => Icon(
+                        Icons.location_on_rounded,
+                        size: 26,
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ),
           ),
           title: Text(vpn.countryLong),
           subtitle: Row(

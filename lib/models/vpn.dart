@@ -21,7 +21,7 @@ class Vpn {
   Vpn.fromJson(Map<String, dynamic> json) {
     hostname = json['HostName'] ?? '';
     ip = json['IP'] ?? '';
-    ping = json['Ping'].toString();
+    ping = json['Ping']?.toString() ?? '0';
     speed = json['Speed'] ?? 0;
     countryLong = json['CountryLong'] ?? '';
     countryShort = json['CountryShort'] ?? '';

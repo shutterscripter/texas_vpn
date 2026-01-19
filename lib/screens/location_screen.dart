@@ -1,35 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vpn_basic_project/api/fetch_servers.dart';
-import 'package:vpn_basic_project/controllers/location_controller.dart'
-    show LocationController;
+import 'package:vpn_basic_project/controllers/location_controller.dart';
 import 'package:vpn_basic_project/widget/vpn_card.dart';
 
-class LocationScreen extends StatefulWidget {
-  const LocationScreen({super.key});
-
-  @override
-  State<LocationScreen> createState() => _LocationScreenState();
-}
-
-class _LocationScreenState extends State<LocationScreen> {
+class LocationScreen extends StatelessWidget {
+  LocationScreen({super.key});
   final LocationController _locationController = Get.put(LocationController());
-
-  @override
-  void initState() {
-    _locationController.getVPNServers();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _locationController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    if (_locationController.vpnList.isEmpty) {
+      _locationController.getVPNServers();
+    }
+    return RefreshIndicator(
+      onRefresh: () async {
+        _locationController.getVPNServers();
+      },
+      child: Scaffold(
         appBar: AppBar(),
         body: Obx(
           () => _locationController.isLoading.value
@@ -41,7 +27,9 @@ class _LocationScreenState extends State<LocationScreen> {
                       child: Text('No Data'),
                     )
                   : _vpnData(),
-        ));
+        ),
+      ),
+    );
   }
 
   _vpnData() => ListView.builder(

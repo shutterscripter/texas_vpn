@@ -15,7 +15,8 @@ class HomeController extends GetxController {
 
   Future<void> connectVPN() async {
     ///Stop right here if user not select a vpn
-    if (selectedVpn.value!.openVPNConfigDataBase64.isEmpty) {
+    if (selectedVpn.value!.openVPNConfigDataBase64.isEmpty ||
+        selectedVpn.value == null) {
       CustomSnackbars.showInfoSnackBar(msg: 'Please Select a Location!');
       return;
     }

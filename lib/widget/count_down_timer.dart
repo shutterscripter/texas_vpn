@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CountDownTimer extends StatefulWidget {
@@ -39,12 +39,18 @@ class _CountDownTimerState extends State<CountDownTimer> {
     final minutes = twoDigits(_duration.inMinutes.remainder(60));
     final seconds = twoDigits(_duration.inSeconds.remainder(60));
     final hours = twoDigits(_duration.inHours.remainder(24));
+
     return Center(
       child: Text(
-        '${hours}:${minutes}:${seconds}',
+        '$hours:$minutes:$seconds',
         style: TextStyle(
-          fontSize: 20.sp,
-          fontWeight: FontWeight.bold,
+          fontSize: 48.sp,
+          fontWeight: FontWeight.w700,
+          color: Colors.white,
+          letterSpacing: 2,
+          fontFeatures: [
+            FontFeature.tabularFigures(), // Makes numbers monospaced
+          ],
         ),
       ),
     );

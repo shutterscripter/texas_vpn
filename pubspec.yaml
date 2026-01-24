@@ -28,6 +28,8 @@ dependencies:
   #Storage using hive
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  forui: ^0.17.0
+  flutter_svg: ^2.2.3
 
 dev_dependencies:
   flutter_test:
@@ -48,3 +50,4 @@ flutter:
     - assets/
     - assets/vpn/
     - assets/flags/
+    - assets/others/

@@ -26,7 +26,7 @@ class CustomSnackbars {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: startColor.withOpacity(0.3),
+              color: startColor.withValues(alpha: 0.3),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -38,7 +38,7 @@ class CustomSnackbars {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.2),
+                color: Colors.white.withValues(alpha: 0.2),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -66,7 +66,7 @@ class CustomSnackbars {
                   Text(
                     message,
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.95),
+                      color: Colors.white.withValues(alpha: 0.95),
                       fontSize: 12,
                     ),
                     maxLines: 2,

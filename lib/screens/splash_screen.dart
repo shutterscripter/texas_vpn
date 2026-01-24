@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:forui/forui.dart';
 import 'package:get/route_manager.dart';
 import 'package:vpn_basic_project/screens/home_screen.dart';
 
@@ -17,15 +18,17 @@ class _SplashScreenState extends State<SplashScreen> {
         Duration(milliseconds: 1500),
         () => {
               SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge),
-              Get.off(() => HomeScreen()),
+              Get.off(
+                () => HomeScreen(),
+              ),
             });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
+    return FScaffold(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

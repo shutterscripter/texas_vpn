@@ -52,8 +52,8 @@ class VpnCard extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Colors.grey.withOpacity(0.15),
-                  Colors.grey.withOpacity(0.05),
+                  Colors.grey.withValues(alpha: 0.15),
+                  Colors.grey.withValues(alpha: 0.05),
                 ],
               ),
             ),

@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       theme: theme.toApproximateMaterialTheme(),
       darkTheme: theme.toApproximateMaterialTheme(),
       fallbackLocale: const Locale('en', 'US'),
-      themeMode: HivePref.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
     );

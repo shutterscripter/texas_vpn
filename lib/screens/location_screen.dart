@@ -17,6 +17,7 @@ class LocationScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         elevation: 0,
         leading: IconButton(
           icon: Icon(FIcons.chevronLeft),
@@ -26,24 +27,9 @@ class LocationScreen extends StatelessWidget {
           'Select Location',
           style: TextStyle(
             fontSize: 18.sp,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        actions: [
-          Obx(() => _locationController.isLoading.value
-              ? Padding(
-                  padding: EdgeInsets.all(16.w),
-                  child: SizedBox(
-                    width: 20.w,
-                    height: 20.w,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  ),
-                )
-              : IconButton(
-                  icon: Icon(FIcons.refreshCw),
-                  onPressed: () => _locationController.getVPNServers(),
-                )),
-        ],
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -67,7 +53,7 @@ class LocationScreen extends StatelessWidget {
           Icon(
             FIcons.globe,
             size: 64.sp,
-            color: Colors.grey.withOpacity(0.3),
+            color: Colors.grey.withValues(alpha: 0.3),
           ),
           SizedBox(height: 16.h),
           Text(
@@ -83,7 +69,7 @@ class LocationScreen extends StatelessWidget {
             'Pull down to refresh',
             style: TextStyle(
               fontSize: 14.sp,
-              color: Colors.grey.withOpacity(0.7),
+              color: Colors.grey.withValues(alpha: 0.7),
             ),
           ),
           SizedBox(height: 24.h),

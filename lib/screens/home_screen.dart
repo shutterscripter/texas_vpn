@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -20,52 +22,32 @@ class HomeScreen extends StatelessWidget {
     VpnEngine.vpnStageSnapshot().listen((event) {
       _homeController.vpnState.value = event;
     });
+    Timer _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      _homeController.scaleValue.value =
+          _homeController.scaleValue.value == 1.0 ? 0.9 : 1.0;
+    });
 
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text(
-          'Nexas VPN',
-          style: TextStyle(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        actions: [
-          // IconButton(
-          //   onPressed: () {
-          //     Get.changeThemeMode(
-          //         HivePref.isDarkMode ? ThemeMode.light : ThemeMode.dark);
-          //     HivePref.isDarkMode = !HivePref.isDarkMode;
-          //   },
-          //   icon: Icon(Icons.brightness_6),
-          // ),
-          IconButton(
-            onPressed: () {
-              Get.to(() => NetworkTestScreen());
-            },
-            icon: Icon(Icons.info_outline),
-          ),
-          // IconButton(
-          //   onPressed: () {
-          //     Get.to(() => LocationScreen());
-          //   },
-          //   icon: Icon(Icons.location_on_outlined),
-          // ),
-        ],
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 0.h),
             child: Column(
               children: [
-                /// VPN Button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Get.to(() => NetworkTestScreen());
+                        },
+                        icon: Icon(FIcons.badgeInfo))
+                  ],
+                ),
+                SizedBox(height: 10.h),
                 _vpnButton(),
                 SizedBox(height: 10.h),
-
-                /// Auto VPN Title
                 Obx(() => Text(
                       _homeController.selectedVpn.value!.countryLong.isEmpty
                           ? 'Auto VPN'
@@ -75,17 +57,13 @@ class HomeScreen extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     )),
-
                 SizedBox(height: 15.h),
-
-                /// Timer
-                Obx(() => CountDownTimer(
-                    StartTimer: _homeController.vpnState.value ==
-                        VpnEngine.vpnConnected)),
-
+                Obx(
+                  () => CountDownTimer(
+                      StartTimer: _homeController.vpnState.value ==
+                          VpnEngine.vpnConnected),
+                ),
                 SizedBox(height: 10.h),
-
-                /// Connection Status
                 Obx(() => Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -103,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                                     : Colors.grey,
                           ),
                         ),
-                        SizedBox(width: 8),
+                        SizedBox(width: 8.w),
                         Text(
                           _homeController.vpnState.value ==
                                   VpnEngine.vpnDisconnected
@@ -119,12 +97,8 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ],
                     )),
-
                 SizedBox(height: 30.h),
-
-                /// Info Cards Grid
                 _buildInfoCards(),
-
                 SizedBox(height: 20.h),
               ],
             ),
@@ -178,7 +152,6 @@ class HomeScreen extends StatelessWidget {
       builder: (context, snapshot) {
         return Column(
           children: [
-            // First Row - Ping & Server
             Row(
               children: [
                 Expanded(
@@ -207,7 +180,6 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 15.h),
-            // Second Row - Download & Upload
             Row(
               children: [
                 Expanded(
@@ -246,7 +218,7 @@ class HomeScreen extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Colors.white.withOpacity(0.05),
+          color: Colors.white.withValues(alpha: 0.05),
           width: 1,
         ),
       ),
@@ -255,7 +227,7 @@ class HomeScreen extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(8.w),
             decoration: BoxDecoration(
-              color: iconColor.withOpacity(0.15),
+              color: iconColor.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(
@@ -311,10 +283,10 @@ class HomeScreen extends StatelessWidget {
             shape: BoxShape.circle,
             gradient: RadialGradient(
               colors: [
-                _homeController.getButtonColor.withOpacity(0.3),
-                _homeController.getButtonColor.withOpacity(0.1),
+                _homeController.getButtonColor.withValues(alpha: 0.3),
+                _homeController.getButtonColor.withValues(alpha: 0.1),
               ],
-              stops: [0.3, 0.6],
+              stops: [0.4, 1],
             ),
           ),
           child: Container(
@@ -323,8 +295,8 @@ class HomeScreen extends StatelessWidget {
               shape: BoxShape.circle,
               gradient: RadialGradient(
                 colors: [
-                  _homeController.getButtonColor.withOpacity(0.4),
-                  _homeController.getButtonColor.withOpacity(0.2),
+                  _homeController.getButtonColor.withValues(alpha: 0.4),
+                  _homeController.getButtonColor.withValues(alpha: 0.2),
                 ],
               ),
             ),

@@ -13,6 +13,8 @@ class HomeController extends GetxController {
 
   final vpnState = VpnEngine.vpnDisconnected.obs;
 
+  final scaleValue = 1.0.obs;
+
   Future<void> connectVPN() async {
     ///Stop right here if user not select a vpn
     if (selectedVpn.value!.openVPNConfigDataBase64.isEmpty ||

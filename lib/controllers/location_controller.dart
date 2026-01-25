@@ -4,13 +4,19 @@ import 'package:vpn_basic_project/helpers/hive_pref.dart';
 import 'package:vpn_basic_project/models/vpn.dart';
 
 class LocationController extends GetxController {
-  List<Vpn> vpnList = HivePref.vpnList;
+  final RxList<Vpn> vpnList = <Vpn>[].obs;
   final RxBool isLoading = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    vpnList.value = HivePref.vpnList;
+  }
 
   Future<void> getVPNServers() async {
     isLoading.value = true;
-    vpnList.clear();
-    vpnList = await FetchServers.getVPNServers();
+    final servers = await FetchServers.getVPNServers();
+    vpnList.value = servers;
     isLoading.value = false;
   }
 }

@@ -16,16 +16,10 @@ dependencies:
 
   # Cupertino style icons
   cupertino_icons: ^1.0.8
-  #Getx
   get: ^4.7.3
-  #size util
   flutter_screenutil: ^5.9.3
-  #http
   http: ^1.6.0
-  #csv
   csv: ^6.0.0
-
-  #Storage using hive
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   forui: ^0.17.0

@@ -40,17 +40,20 @@ class _CountDownTimerState extends State<CountDownTimer> {
     final seconds = twoDigits(_duration.inSeconds.remainder(60));
     final hours = twoDigits(_duration.inHours.remainder(24));
 
-    return Center(
-      child: Text(
-        '$hours:$minutes:$seconds',
-        style: TextStyle(
-          fontSize: 48.sp,
-          fontWeight: FontWeight.w700,
-          color: Colors.white,
-          letterSpacing: 2,
-          fontFeatures: [
-            FontFeature.tabularFigures(), // Makes numbers monospaced
-          ],
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      child: Center(
+        child: Text(
+          '$hours:$minutes:$seconds',
+          style: TextStyle(
+            fontSize: 48.sp,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+            letterSpacing: 2,
+            fontFeatures: [
+              FontFeature.tabularFigures(), // Makes numbers monospaced
+            ],
+          ),
         ),
       ),
     );

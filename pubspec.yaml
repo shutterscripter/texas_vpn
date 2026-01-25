@@ -42,6 +42,5 @@ flutter:
   # App assets
   assets:
     - assets/
-    - assets/vpn/
     - assets/flags/
     - assets/others/

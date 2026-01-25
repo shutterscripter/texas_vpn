@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
     VpnEngine.vpnStageSnapshot().listen((event) {
       _homeController.vpnState.value = event;
     });
-    Timer _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(Duration(seconds: 1), (timer) {
       _homeController.scaleValue.value =
           _homeController.scaleValue.value == 1.0 ? 0.9 : 1.0;
     });

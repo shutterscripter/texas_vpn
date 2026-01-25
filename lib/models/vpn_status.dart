@@ -7,16 +7,16 @@ class VpnStatus {
   String? byteOut;
 
   factory VpnStatus.fromJson(Map<String, dynamic> json) => VpnStatus(
-        duration: json['duration'],
-        lastPacketReceive: json['last_packet_receive'],
-        byteIn: json['byte_in'],
-        byteOut: json['byte_out'],
-      );
+    duration: json['duration'],
+    lastPacketReceive: json['last_packet_receive'],
+    byteIn: json['byte_in'],
+    byteOut: json['byte_out'],
+  );
 
   Map<String, dynamic> toJson() => {
-        'duration': duration,
-        'last_packet_receive': lastPacketReceive,
-        'byte_in': byteIn,
-        'byte_out': byteOut
-      };
+    'duration': duration,
+    'last_packet_receive': lastPacketReceive,
+    'byte_in': byteIn,
+    'byte_out': byteOut,
+  };
 }

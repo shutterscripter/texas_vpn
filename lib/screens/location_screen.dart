@@ -25,10 +25,7 @@ class LocationScreen extends StatelessWidget {
         ),
         title: Text(
           'Select Location',
-          style: TextStyle(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
         ),
       ),
       body: RefreshIndicator(
@@ -36,7 +33,8 @@ class LocationScreen extends StatelessWidget {
           await _locationController.getVPNServers();
         },
         child: Obx(
-          () => _locationController.vpnList.isEmpty &&
+          () =>
+              _locationController.vpnList.isEmpty &&
                   !_locationController.isLoading.value
               ? _buildEmptyState()
               : _buildVpnList(),
@@ -99,11 +97,7 @@ class LocationScreen extends StatelessWidget {
           child: Obx(
             () => Row(
               children: [
-                Icon(
-                  FIcons.server,
-                  size: 16.sp,
-                  color: Colors.grey,
-                ),
+                Icon(FIcons.server, size: 16.sp, color: Colors.grey),
                 SizedBox(width: 8.w),
                 Text(
                   '${_locationController.vpnList.length} servers available',

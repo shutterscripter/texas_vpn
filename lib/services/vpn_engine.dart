@@ -24,15 +24,12 @@ class VpnEngine {
   ///Start VPN easily
   static Future<void> startVpn(VpnConfig vpnConfig) async {
     log(vpnConfig.config);
-    return MethodChannel(_methodChannelVpnControl).invokeMethod(
-      "start",
-      {
-        "config": vpnConfig.config,
-        "country": vpnConfig.country,
-        "username": vpnConfig.username,
-        "password": vpnConfig.password,
-      },
-    );
+    return MethodChannel(_methodChannelVpnControl).invokeMethod("start", {
+      "config": vpnConfig.config,
+      "country": vpnConfig.country,
+      "username": vpnConfig.username,
+      "password": vpnConfig.password,
+    });
   }
 
   ///Stop vpn

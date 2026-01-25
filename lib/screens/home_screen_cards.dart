@@ -28,10 +28,7 @@ class HomeScreenCard extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Color(0xFF2A2E5C),
-              Color(0xFF1C1F3F),
-            ],
+            colors: [Color(0xFF2A2E5C), Color(0xFF1C1F3F)],
           ),
           boxShadow: [
             BoxShadow(

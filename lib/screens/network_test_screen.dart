@@ -19,10 +19,7 @@ class NetworkTestScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Network Test',
-          style: TextStyle(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
         ),
       ),
       body: SafeArea(

@@ -24,15 +24,17 @@ class HomeController extends GetxController {
     }
 
     if (vpnState.value == VpnEngine.vpnDisconnected) {
-      final data =
-          Base64Decoder().convert(selectedVpn.value!.openVPNConfigDataBase64);
+      final data = Base64Decoder().convert(
+        selectedVpn.value!.openVPNConfigDataBase64,
+      );
       final config = Utf8Decoder().convert(data);
 
       final vpnConfig = VpnConfig(
-          country: selectedVpn.value!.countryLong,
-          username: 'vpn',
-          password: 'vpn',
-          config: config);
+        country: selectedVpn.value!.countryLong,
+        username: 'vpn',
+        password: 'vpn',
+        config: config,
+      );
 
       ///Start if stage is disconnected
       VpnEngine.startVpn(vpnConfig);

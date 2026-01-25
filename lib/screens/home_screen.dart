@@ -23,8 +23,9 @@ class HomeScreen extends StatelessWidget {
       _homeController.vpnState.value = event;
     });
     Timer.periodic(Duration(seconds: 1), (timer) {
-      _homeController.scaleValue.value =
-          _homeController.scaleValue.value == 1.0 ? 0.9 : 1.0;
+      _homeController.scaleValue.value = _homeController.scaleValue.value == 1.0
+          ? 0.9
+          : 1.0;
     });
 
     return Scaffold(
@@ -39,64 +40,72 @@ class HomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
-                        onPressed: () {
-                          Get.to(() => NetworkTestScreen());
-                        },
-                        icon: Icon(FIcons.badgeInfo))
+                      onPressed: () {
+                        Get.to(() => NetworkTestScreen());
+                      },
+                      icon: Icon(FIcons.badgeInfo),
+                    ),
                   ],
                 ),
                 SizedBox(height: 10.h),
                 _vpnButton(),
                 SizedBox(height: 10.h),
-                Obx(() => Text(
-                      _homeController.selectedVpn.value!.countryLong.isEmpty
-                          ? 'Auto VPN'
-                          : _homeController.selectedVpn.value!.countryLong,
-                      style: TextStyle(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    )),
+                Obx(
+                  () => Text(
+                    _homeController.selectedVpn.value!.countryLong.isEmpty
+                        ? 'Auto VPN'
+                        : _homeController.selectedVpn.value!.countryLong,
+                    style: TextStyle(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
                 SizedBox(height: 15.h),
                 Obx(
                   () => CountDownTimer(
-                      StartTimer: _homeController.vpnState.value ==
-                          VpnEngine.vpnConnected),
+                    StartTimer:
+                        _homeController.vpnState.value ==
+                        VpnEngine.vpnConnected,
+                  ),
                 ),
                 SizedBox(height: 10.h),
-                Obx(() => Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: 8,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: _homeController.vpnState.value ==
-                                    VpnEngine.vpnConnected
-                                ? Colors.greenAccent
-                                : _homeController.vpnState.value ==
-                                        VpnEngine.vpnDisconnected
-                                    ? Colors.redAccent
-                                    : Colors.grey,
-                          ),
-                        ),
-                        SizedBox(width: 8.w),
-                        Text(
-                          _homeController.vpnState.value ==
-                                  VpnEngine.vpnDisconnected
-                              ? 'Disconnected'
+                Obx(
+                  () => Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color:
+                              _homeController.vpnState.value ==
+                                  VpnEngine.vpnConnected
+                              ? Colors.greenAccent
                               : _homeController.vpnState.value ==
-                                      VpnEngine.vpnConnected
-                                  ? 'Connected'
-                                  : 'Connecting...',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
+                                    VpnEngine.vpnDisconnected
+                              ? Colors.redAccent
+                              : Colors.grey,
                         ),
-                      ],
-                    )),
+                      ),
+                      SizedBox(width: 8.w),
+                      Text(
+                        _homeController.vpnState.value ==
+                                VpnEngine.vpnDisconnected
+                            ? 'Disconnected'
+                            : _homeController.vpnState.value ==
+                                  VpnEngine.vpnConnected
+                            ? 'Connected'
+                            : 'Connecting...',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 SizedBox(height: 30.h),
                 _buildInfoCards(),
                 SizedBox(height: 20.h),
@@ -136,7 +145,7 @@ class HomeScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Icon(FIcons.globe, size: 18.sp)
+                Icon(FIcons.globe, size: 18.sp),
               ],
             ),
           ),
@@ -159,7 +168,8 @@ class HomeScreen extends StatelessWidget {
                     icon: FIcons.gauge,
                     iconColor: Colors.orangeAccent,
                     title: 'Ping',
-                    value: _homeController.selectedVpn.value!.ping.isEmpty ||
+                    value:
+                        _homeController.selectedVpn.value!.ping.isEmpty ||
                             _homeController.selectedVpn.value!.ping == '0'
                         ? '0 ms'
                         : '${_homeController.selectedVpn.value!.ping} ms',
@@ -173,8 +183,8 @@ class HomeScreen extends StatelessWidget {
                     title: 'Server',
                     value:
                         _homeController.selectedVpn.value!.countryLong.isEmpty
-                            ? 'Select'
-                            : _homeController.selectedVpn.value!.countryLong,
+                        ? 'Select'
+                        : _homeController.selectedVpn.value!.countryLong,
                   ),
                 ),
               ],
@@ -230,11 +240,7 @@ class HomeScreen extends StatelessWidget {
               color: iconColor.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(
-              icon,
-              color: iconColor,
-              size: 20.sp,
-            ),
+            child: Icon(icon, color: iconColor, size: 20.sp),
           ),
           SizedBox(width: 12.w),
           Expanded(
@@ -302,9 +308,7 @@ class HomeScreen extends StatelessWidget {
             ),
             child: Container(
               margin: EdgeInsets.all(10.w),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-              ),
+              decoration: BoxDecoration(shape: BoxShape.circle),
               child: Center(
                 child: Stack(
                   alignment: Alignment.center,
@@ -326,8 +330,9 @@ class HomeScreen extends StatelessWidget {
                         color: Theme.of(Get.context!).scaffoldBackgroundColor,
                         boxShadow: [
                           BoxShadow(
-                            color: _homeController.getButtonColor
-                                .withValues(alpha: 0.5),
+                            color: _homeController.getButtonColor.withValues(
+                              alpha: 0.5,
+                            ),
                             blurRadius: 20,
                             spreadRadius: 2,
                           ),

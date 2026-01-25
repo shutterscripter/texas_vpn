@@ -1,6 +1,6 @@
 # Nexas VPN
 
-![Flutter CI](https://github.com/shutterscripter/Texas_vpn/workflows/Flutter%20CI/badge.svg)
+![Flutter CI](https://github.com/shutterscripter/texas_vpn/workflows/Flutter%20CI/badge.svg)
 
 A modern, secure, and beautifully designed VPN application built with Flutter.
 
